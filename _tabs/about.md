@@ -4,8 +4,9 @@ icon: fas fa-info-circle
 order: 3
 ---
 
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
+<h2 align="center"> Hi there! </h2>
+
+![dans avatar](/assets/orc_avatar.png){: width="200" height="100" .center}
 
 I'm Dan, your host for this visit. I'm an Australian software test engineer based in Melbourne. That doesn't mean I specialise in Australian software, although we definitely do things a little differently around here! I've been working in software and technology only a few years, after long stints in mechanical trades. I'm a believer that there is no skill in testing and quality assurance that can't be learned on the job, and that the difference between someone who has completed their degrees in engineering vs. those who bring the right attitude and mindset soon fade away.
 
