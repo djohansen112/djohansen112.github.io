@@ -12,6 +12,8 @@ If you think I offer something you'd like to see on your team please reach out t
 
 {% pdf "/assets/djohansen-cover.pdf" %}
 
+{% pdf "/assets/djohansen-resume.pdf" %}
+
 
 
 
