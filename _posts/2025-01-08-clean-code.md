@@ -36,58 +36,51 @@ Hell, this isn't even an exhaustive list! This is just the ones that make sense 
 ### Avoid hardcoding and use constants instead
 Constants can be kept in separate classes, like a configuration file, and reused wherever you need. Why define something that you later have to search for by digging through hundreds or thousands of lines of code when you can define it once and reuse it.
 
-
 <h4>Poor Code</h4>
 {% highlight csharp %}
- public static void ConvertToHours(int seconds){
+
+public static void ConvertToHours(int seconds){
     return seconds * 3600;
 } 
+
 {% endhighlight csharp %}
+
 <h4>Clean Code</h4>
 {% highlight csharp %}
 
- public const int Seconds_in_an_hour = 3600;
+public const int Seconds_in_an_hour = 3600;
  
- public static void ConvertToHours(int seconds){
+public static void ConvertToHours(int seconds){
     return seconds * Seconds_in_an_hour;
 } 
 {% endhighlight csharp %}
 
 ### Meaningful and descriptive naming
 If you were creating an app that tracked days, why would you call it d when we can call it days? Sure it takes a few more keystrokes, but better that than scratching at your head for an hour in a month when you come back to do something else with this function.
-<table>
-<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
-<tr><td> 
-
-```cs
+<h4>Poor Code</h4>
+{% highlight csharp %}
  public static void DaysSinceLogin(User u){
     int d;
     d = u.ll - currentDate();
     return d;
 } 
-```
-</td><td>
-
-```cs
+{% endhighlight csharp %}
+<h4>Poor Code</h4>
+{% highlight csharp %}
  public static void DaysSinceLogin(User user){
     int daysSinceLogin;
     daysSinceLogin = user.lastLogin - currentDate();
     return daysSinceLogin;
 } 
-```
-</td></tr>
-</table>
+{% endhighlight csharp %}
 
-### Explaoin yourself in code
+### Explain yourself in code
 Even though it can sometimes feel redundant, it's better to explain yourself through pulling concepts together into sensible packets while you understand them. Maybe if we had an employee tracker that followed some business rule of:
 > Employees who have been here 5 years, and are selling more than $10k per month are considered for a bonus
 
 Then let's pull those two concepts together early on so we can read through and understand it earlier.
-<table>
-<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
-<tr><td> 
-
-```cs
+<h4>Poor Code</h4>
+{% highlight csharp %}
  class Employee {
     public int yearsServed;
     public int monthlySales;
@@ -96,10 +89,9 @@ Then let's pull those two concepts together early on so we can read through and 
 //500,000 lines of code later...
     if (Employee.yearsServed > 5 && Employee.monthlySales > 10000)
         payBonusTo(Employee)
-```
-</td><td>
-
-```cs
+{% endhighlight csharp %}
+<h4>Clean Code</h4>
+{% highlight csharp %}
  class Employee {
     private int yearsServed;
     private int monthlySales;
@@ -114,9 +106,8 @@ Then let's pull those two concepts together early on so we can read through and 
     if (Employee.getsBonus())
         payBonusTo(Employee)
 
-```
-</td></tr>
-</table>
+{% endhighlight csharp %}
+
 Even though these look more confusing, now the code for getting a bonus is in the Employee, not the Payment Calculator, or Accounting Frontend, or wherever else we could lose track of it, and the readability in the code is MUCH improved.
 
 ### Use comments sparingly and meaningfully
@@ -124,11 +115,9 @@ Even though these look more confusing, now the code for getting a bonus is in th
 Good code doesn't need comments. Comments can go out of date, and given there's no outward sign that they are incorrect like we would have with incorrect code, then we are often unaware that they are out of date. 
 We trust comments though, so think of the poor dude 5 years from now wildly questioning their choice of career as they try to understand whether the code is not doing what the comment wants it to do, or the comment is not about the code.
 Also, even though green is our favourite colour, in comments it can become difficult to pick through. 
-<table>
-<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
-<tr><td> 
+<h4>Poor Code</h4>
+{% highlight csharp %}
 
-```cs
  class Employee {
     private int yearsServed //number of years served;
     private int monthlySales //monthly sales in dollars;
@@ -145,10 +134,9 @@ Also, even though green is our favourite colour, in comments it can become diffi
     if (Employee.getsBonus())   //this is from the Employee class
         payBonusTo(Employee)
 
-```
-</td><td>
-
-```cs
+{% endhighlight csharp %}
+<h4>Poor Code</h4>
+{% highlight csharp %}
  class Employee {
     private int yearsServed;
     private int monthlySales;
@@ -160,20 +148,15 @@ Also, even though green is our favourite colour, in comments it can become diffi
         reurn false;
     }
 } 
-```
-</td></tr>
-</table>
+{% endhighlight csharp %}
 
 Great! Now we know where the rule came from, and in the future we can verify whether we are still using v2.6 of the employee handbook or if we need to raise a question whether this should still be in the code. Everything else is prose - given we have named our variables and functions, we can almost read the code aloud to understand it. If we didn't have the names but had the comments there, it would definitely be time to spend a few minutes refactoring names and removing the comments.
 
 ### Functions do one thing - Single Responsibility Principle
 A function should be named as a verb, in all cases! Why? Functions DO something.
 
-<table>
-<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
-<tr><td> 
-
-```cs
+<h4>Poor Code</h4>
+{% highlight csharp %}
  public void Calculator(int a, int b, string operator) {
     if (operator == "multiply")
         return a * b;
@@ -187,10 +170,9 @@ A function should be named as a verb, in all cases! Why? Functions DO something.
 ...
 //500,000 lines of code later...
     speed = Calculator(62, 15, multiply)
-```
-</td><td>
-
-```cs
+{% endhighlight csharp %}
+<h4>Poor Code</h4>
+{% highlight csharp %}
  public void multiplyTwoNumbers(int a, int b) {
             return a * b;
  }
@@ -206,9 +188,7 @@ A function should be named as a verb, in all cases! Why? Functions DO something.
  ...
 //500,000 lines of code later...
     speed = multiplyTwoNumbers(62, 15)
-```
-</td></tr>
-</table>
+{% endhighlight csharp %}
 
 Even though we have technically written more code we have created specific verbs that simply state what will happen with this function. Readability is improved, modularity is improved. We can even extract these out to a class named Calculator to abstract the code away from a single file, and possibly open up even more re-usability across the entire codebase.
 In these examples, even though they are simple, we can imagine a more complex function that draws information from multiple systems to perform a task. We would be creating 4 functions that can be worked on independently or we could have a single mega-function that has 4 times as many lines, and if one thing goes wrong, we need to debug the entire function. Guess which one I'd choose!
@@ -218,11 +198,8 @@ Don't repeat yourself is about not repeating yourself.
 
 OK, moving on from that now that you've stopped applauding my comedic genius. Don't repeat yourself is about reducing the complexity by identifying places where our code can be reused.
 
-<table>
-<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
-<tr><td> 
-
-```cs
+<h4>Poor Code</h4>
+{% highlight csharp %}
 public void withdrawFromAccount(int withdrawal, User user) {
     if (user.balance > 0 && user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
         user.balance = user.balance - withdrawal
@@ -232,10 +209,9 @@ public void withdrawFromAccount(int withdrawal, User user) {
         print("User balance is negative! Aborting withdrawal")
     }
 } 
-```
-</td><td>
-
-```cs
+{% endhighlight csharp %}
+<h4>Poor Code</h4>
+{% highlight csharp %}
 public void withdrawFromAccount(int withdrawal, User user) {
     if (user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
         user.isValid = true;
@@ -249,9 +225,7 @@ public void withdrawFromAccount(int withdrawal, User user) {
         print("User balance is negative! Aborting withdrawal")
     }
 } 
-```
-</td></tr>
-</table>
+{% endhighlight csharp %}
 
 Even better, we could track that status of ".isValid" on the user itself and use it for withdrawals, tax, fees, incoming transactions etc.
 
@@ -264,46 +238,37 @@ Some standard capitalisation patterns includ:
 
 > <h4>kebab-case</h4> Looking like a skewer of letters, kebab case is not common in programming, but definitely would be familiar to anyone working with URLs or other places we need easily readable names without whitespace.
 
-> <h4>PascalCase</h4> Capitalise Everything! This is from the Pascal language, but is adopted into almost every other language, usually used to denote a class name.
+> <h4>PascalCase</h4> Capitalise Every Word In The String! This is from the Pascal language, but is adopted into almost every other language, usually used to denote a class name.
 
 > <h4>CAPITAL_CASE</h4> Usually underscored to help with readability, this is commonly used for naming constants in programming and for yelling at furutre programmers in comments.
 
 Other standards apply, such as PEP-8 for Python where they specify the number of spaces tyo be used to create indents, as well as where brackets should appear etc.
 
 The following Poor Code is just as valid as the Clean Code to the compiler, but definitely reads better. After all, code is for humans to read, and computers to interpret. If we can read it easily, we can make sure it works for the computers to interpret.
+<h4>Poor Code</h4>
+{% highlight java %}
 
-<table>
-<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
-<tr><td> 
-
-```java
 public static void createabiglistofnumbers(){for(int i=0; i<5; i++)
 {System.out.println(i);}}
-```
-</td><td>
+{% endhighlight java %}
 
-```java
+<h4>Poor Code</h4>
+{% highlight java %}
  public static void createListOfNumbers(){
     for(int i = 0; i < 5; i++){
         System.out.println(i);
     }
  }
-
-```
-</td></tr>
-</table>
+{% endhighlight java %}
 
 Good code has a shape to it - good code can be identified by squinting your eyes and letting the details blur. Software engineering professionals can identify poor code without reading a single line, just by looking at the shape.
 
 ### Nested conditionals should be functions
 Anything more than two indents is a new function. Not a hard and fast rule, but consider this - a function should do one thing, as per the principle above, and nested code is either checking multiple things or performing too many functions. This can be a generalisation, and something like a nested for loop can sometimes help when constructing a multi dimensional array, but where possible, we should be trying to clean up.
 
+<h4>Poor Code</h4>
+{% highlight javascript %}
 
-<table>
-<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
-<tr><td> 
-
-```js
 const seatingArray = [
   [1, 2, 3],
   [4, 5, 6],
@@ -315,10 +280,11 @@ for (let i = 0; i < seatingArray.length; i++) {
     console.log(seatingArray[i][j]);
   }
 }
-```
-</td><td>
+{% endhighlight javascript %}
 
-```java
+<h4>Poor Code</h4>
+{% highlight javascript %}
+
 const seatingArray = [
   [1, 2, 3],
   [4, 5, 6],
@@ -334,11 +300,10 @@ function iterateArray(array, callback) {
 }
 
 iterateArray(seatingArray, (value, i, j) => {
-  console.log(`Element at [${i},${j}]: ${value}`);
+  console.log("Element at [${i},${j}]: ${value}");
 });
-```
-</td></tr>
-</table>
+{% endhighlight javascript %}
+
 This is another case where there are more lines of code, but the code is much more readable, modular, and decoupled than before. On top of that, in case we ever need to iterate through another array, we can throw it to this function and customise the result.
 
 ### Refactor, refactor, refactor
