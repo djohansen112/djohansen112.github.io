@@ -37,15 +37,13 @@ Hell, this isn't even an exhaustive list! This is just the ones that make sense 
 Constants can be kept in separate classes, like a configuration file, and reused wherever you need. Why define something that you later have to search for by digging through hundreds or thousands of lines of code when you can define it once and reuse it.
 
 
-<table>
-<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
-<tr><td> 
+<h4>Poor Code</h4>
 {% highlight csharp %}
  public static void ConvertToHours(int seconds){
     return seconds * 3600;
 } 
 {% endhighlight csharp %}
-</td><td>
+<h4>Clean Code</h4>
 {% highlight csharp %}
 
  public const int Seconds_in_an_hour = 3600;
@@ -54,8 +52,6 @@ Constants can be kept in separate classes, like a configuration file, and reused
     return seconds * Seconds_in_an_hour;
 } 
 {% endhighlight csharp %}
-</td></tr>
-</table>
 
 ### Meaningful and descriptive naming
 If you were creating an app that tracked days, why would you call it d when we can call it days? Sure it takes a few more keystrokes, but better that than scratching at your head for an hour in a month when you come back to do something else with this function.
