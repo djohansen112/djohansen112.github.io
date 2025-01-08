@@ -44,7 +44,7 @@ Constants can be kept in separate classes, like a configuration file, and reused
  public static void ConvertToHours(int seconds){
     return seconds * 3600;
 } 
-{% end highlight csharp %}
+{% endhighlight csharp %}
 </td><td>
 {% highlight csharp %}
 
@@ -53,7 +53,7 @@ Constants can be kept in separate classes, like a configuration file, and reused
  public static void ConvertToHours(int seconds){
     return seconds * Seconds_in_an_hour;
 } 
-{% end highlight csharp %}
+{% endhighlight csharp %}
 </td></tr>
 </table>
 
