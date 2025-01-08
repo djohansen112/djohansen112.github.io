@@ -261,15 +261,15 @@ Even better, we could track that status of ".isValid" on the user itself and use
 ### Know the standards - reduce the WTFs
 For a simple example we can look at capitalising various names to indicate what they refer to.
 Some standard capitalisation patterns includ:
-> camelCase - named after the hump in the middle, this refers to a small first letter with any subsequent word beging capitalised. Standard in Java for functions, and widely used across different languages for different things, but very common for function names and variables in other languages as well.
+> <h4>camelCase</h4> - named after the hump in the middle, this refers to a small first letter with any subsequent word beging capitalised. Standard in Java for functions, and widely used across different languages for different things, but very common for function names and variables in other languages as well.
 
-> snake_case - slithering along the ground with underscores, this is widely used in Python for naming functions and commonly in database naming soa s to avoid whitespace. 
+> <h4>snake_case</h4> Slithering along the ground with underscores, this is widely used in Python for naming functions and commonly in database naming soa s to avoid whitespace. 
 
-> kebab-case - looking like a skewer of letters, kebab case is not common in programming, but definitely would be familiar to anyone working with URLs or other places we need easily readable names without whitespace.
+> <h4>kebab-case</h4> Looking like a skewer of letters, kebab case is not common in programming, but definitely would be familiar to anyone working with URLs or other places we need easily readable names without whitespace.
 
-> PascalCase - Capitalise Everything! This is from the Pascal language, but is adopted into almost every other language, usually used to denote a class name.
+> <h4>PascalCase</h4> Capitalise Everything! This is from the Pascal language, but is adopted into almost every other language, usually used to denote a class name.
 
-> CAPITAL_CASE - usually underscored to help with readability, this is commonly used for naming constants in programming.
+> <h4>CAPITAL_CASE</h4> Usually underscored to help with readability, this is commonly used for naming constants in programming and for yelling at furutre programmers in comments.
 
 Other standards apply, such as PEP-8 for Python where they specify the number of spaces tyo be used to create indents, as well as where brackets should appear etc.
 
@@ -296,9 +296,53 @@ public static void createabiglistofnumbers(){for(int i=0; i<5; i++)
 </td></tr>
 </table>
 
-### Nested conditionals should be functions
-Anything more than two indents is a new function.
+Good code has a shape to it - good code can be identified by squinting your eyes and letting the details blur. Software engineering professionals can identify poor code without reading a single line, just by looking at the shape.
 
+### Nested conditionals should be functions
+Anything more than two indents is a new function. Not a hard and fast rule, but consider this - a function should do one thing, as per the principle above, and nested code is either checking multiple things or performing too many functions. This can be a generalisation, and something like a nested for loop can sometimes help when constructing a multi dimensional array, but where possible, we should be trying to clean up.
+
+
+<table>
+<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
+<tr><td> 
+
+```js
+const seatingArray = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
+
+for (let i = 0; i < seatingArray.length; i++) {
+  for (let j = 0; j < seatingArray[i].length; j++) {
+    console.log(seatingArray[i][j]);
+  }
+}
+```
+</td><td>
+
+```java
+const seatingArray = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
+
+function iterateArray(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array[i].length; j++) {
+      callback(array[i][j], i, j);
+    }
+  }
+}
+
+iterateArray(seatingArray, (value, i, j) => {
+  console.log(`Element at [${i},${j}]: ${value}`);
+});
+```
+</td></tr>
+</table>
+This is another case where there are more lines of code, but the code is much more readable, modular, and decoupled than before. On top of that, in case we ever need to iterate through another array, we can throw it to this function and customise the result.
 
 ### Refactor, refactor, refactor
 
