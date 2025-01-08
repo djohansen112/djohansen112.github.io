@@ -35,24 +35,25 @@ Hell, this isn't even an exhaustive list! This is just the ones that make sense 
 
 ### Avoid hardcoding and use constants instead
 Constants can be kept in separate classes, like a configuration file, and reused wherever you need. Why define something that you later have to search for by digging through hundreds or thousands of lines of code when you can define it once and reuse it.
+
+
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```cs
+{% highlight csharp %}
  public static void ConvertToHours(int seconds){
     return seconds * 3600;
 } 
-```
+{% end highlight csharp %}
 </td><td>
+{% highlight csharp %}
 
-```cs
  public const int Seconds_in_an_hour = 3600;
  
  public static void ConvertToHours(int seconds){
     return seconds * Seconds_in_an_hour;
 } 
-```
+{% end highlight csharp %}
 </td></tr>
 </table>
 
