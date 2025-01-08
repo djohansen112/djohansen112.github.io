@@ -47,11 +47,13 @@ For building this test, let's start with an example - we're expecting a 200 resp
 The second part is the declaration of what the test will be. In the vast majority of cases, this will be running a Javascript function.
 The Javascript function in this case will just use a combination of PM library methods.
 
-{% highlight javascript %} 
+{% highlight javascript %}
 
-pm.test("Status returns 200", function(){ pm.response.to.have.status(200) });
+pm.test("Status returns 200", function(){ 
+    pm.response.to.have.status(200) 
+});
 
-{% endhighlight javascript %}
+{% endhighlight %}
 
 While there's no hard a fast rule about how many steps you can run, it's always best to keep testing focussed and to the point. It's always better to run more atomic test cases than to combine too many steps into a single method.
 Here's multiple steps in the single test. They each move towards the same goal, but are checking multiple angles.
@@ -64,7 +66,7 @@ pm.test("Status returns 200", function(){
    pm.response.to.have.header("Content-Type");
 });
 
-{% endhighlight javascript %}
+{% endhighlight %}
 
 #### Other PM functions
 Simple so far? Great. If not, have a review over the material and if it's still not coming together, go for an explore or try it yourself!
@@ -85,7 +87,7 @@ pm.test("Response contains a new account ID", function(){
    pm.expect(response.JSON.accountID).to.equal("982341");
 });
 
-{% endhighlight javascript %}
+{% endhighlight %}
 
 Using Javascript we can always extend that even further to help us understand where testing happened and where it failed:
 
@@ -99,7 +101,7 @@ pm.test("Account balance for account: "+ accountNumber + " was not 0", function(
     pm.expect(currentBalance).to.not.equal("0"); 
 });
 
-{% endhighlight javascript %}
+{% endhighlight %}
 
 Or how about using loops in the case of a bulk response:
 
@@ -114,6 +116,6 @@ pm.test("None of the response accounts had a balance of 0", function(){
     }
 });
 
-{% endhighlight javascript %}
+{% endhighlight %}
 
 So get onto it - Postman is free for personal use and it a great tool to get started in setting up some simple testing. 
