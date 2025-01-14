@@ -1,6 +1,6 @@
 ---
 title: Clean Code Principles
-date: 2025-01-10 11:22:33 +1000
+date: 2025-01-14 11:22:33 +1000
 categories: [Development]
 tags: [quality-engineering development]     # TAG names should always be lowercase
 ---
@@ -297,37 +297,130 @@ public static void createabiglistofnumbers(){for(int i=0; i<5; i++)
 </table>
 
 ### Nested conditionals should be functions
-Anything more than two indents is a new function.
+Anything more than two indents is a new function. Not really a hard and fast rule, but if your function has a nested if statement, then perhaps that nest could be exported as another mini function. This opens up the ability to reuse code, as well as better modularity. Even though these are not the end goals of programming, every little bit helps. It can also help to define naming for the code - instead of running an if statement checking someone's account balance by verifying their account status, if they have an account, if they are not on a stop-credit, or any other list of conditions, we can just check "if isValidCustomer()".
+We can see how these are starting to build as we've done this a few times now - Don't Repeat Yourself had similar code, but with a different intention in the example. Let's revisit it here:
 
+<table>
+<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
+<tr><td> 
+
+```cs
+public void withdrawFromAccount(int withdrawal, User user) {
+    if (user.balance > 0 && user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
+        user.balance = user.balance - withdrawal
+    }
+
+    if (user.balance < 0 && user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
+        print("User balance is negative! Aborting withdrawal")
+    }
+} 
+```
+</td><td>
+
+```cs
+public void isValidCustomer(User user){
+    if (user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
+        return true;
+    }
+
+    return false;
+}
+public void withdrawFromAccount(int withdrawal, User user) {
+    if (user.balance > 0 && user.isValidCustomer()){
+        user.balance = user.balance - withdrawal
+    }
+
+    if (user.balance < 0 && user.isValidCustoemr()){
+        print("User balance is negative! Aborting withdrawal")
+    }
+} 
+```
+</td></tr>
+</table>
+So it reads better - if their account balance is greater than 0, and they check out as a valid customer, then we do the balance change. We can now also check that they are a valid, or even better, move that check to a flag on their own account object.
 
 ### Refactor, refactor, refactor
+As Uncle Bob points to in the Boy Scouts motto - "Leave it better than you found it" - we can always make sure we are applying principles to our code. If you are searching through some code during a review, or even just doing some research to use some previous code, you can always open a pull request to improve that code. As the United States' ultra-paranoid government always asks their citizens - if you see something, say something. Vigilance and continuous improvement are some serious allies in creating clean codebases, and it all starts with recognition, review and refactor.
 
 ### Version control
+Never underestimate the value of version control. We use this principle in Test Driven Development (a HUGELY transformative system and methodology that really works well with the principles of clean code) to perform the Red-Green-Refactor cycle. We can see mini  versioning whenever we get another round of refactoring - the aim is for clean code, yes, but the overarchingly important principle is WORKING code. The shorter our versioning, the simpler it is to recall to the last point we had working code. The shorter our versioning, the faster we can develop - building on working code is the key to correct versioning - we have a set of working functions and features that improves our system. It all works around the word "working" - without that key phrase, we are just creating technical debt.
 
 ### Handle errors gracefully
+Errors in your code should never cause the code to completely stop and exit - it can fail, but it should never exit unless there was no other safe way of halting the program. We can do this by handling errors gracefully - accounting for them in our error handling functions, and ensuring that we are keeping memory safe and system safe exits from any process our code creates.
 
-### KISS (Keep It Simple, Stupid)
+There are three steps to handle errors gracefully: Keep the user informed, keep the developer informed, and keep the app running until we can recover. We can do this in a few ways:
+- Input validation: Know that the data your code is about to process is not going to cause data issues. Check that strings are the right length, floats are in the correct decimal form, integers are not negative early on in the process and reject the user to try again, rather than drop everything. 
+- Fail fast: Identify and handle errors early in the process, so we are building on working code and also so we are handling them at the base levels before our code becomes too large to correctly identify error sources. Each function that could create a data handling error should perform the checks, each class that ingests a value should be able to check that the value is in the correct format BEFORE working with it, and reject it back to the function that sent it. If the function returns a value, then it should handle rejection of that value, so it comes straight back, rather than waiting for an entire process tree to complete handling.
+- Logging and monitoring - if your code can identify where the error came from, it should emit a logging message that identifies the function that failed, why it failed, and what it did to stop the error.
+<table>
+<tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
+<tr><td> 
+
+```java
+public static void accountOpen(String args[])
+{
+    try {
+        //some code here
+    }
+    catch (NullPointerException e) {
+        throw e;
+    }
+}
+```
+</td><td>
+
+```java
+public static void accountOpen(String args[])
+{
+    try {
+        //some code here
+    }
+    catch (NullPointerException e) {
+        // to the user:
+        throw new ErrorMessage("Looks like something went wrong! Please try again.")
+        // to the developer:
+        System.out.println("NullPointerException in accountOpen: Account object does not exist")
+        // to the logs, or this may be captured in the ErrorMessage class above
+        LOGGER.log(Level.INFO, "NullPointerException in accountOpen: Account object does not exist"); 
+    }
+}
+
+```
+</td></tr>
+</table>
+
 
 ### You Ain't Gonna Need It
-Don't code what you aren't ready to use. Keep it up to date and reduce the amount of single use code.
+Don't code what you aren't ready to use. Keep it up to date and reduce the amount of single use code. Just because you can code a list object to have a sort function doesn't mean you will ever need to use that sort, so wait until you have something that required the list to be sorted.
 
-### Separation of Concerns (SOC): Divide the code into logical modules or functions, each with a specific responsibility, making it easier to maintain and modify.
-
-
-????
-SOLID:
-Single Resposibility
-Open/Closed Principle (OCP) states that software entities should be open for extension but closed for modification
-Liskov Substituion Principle - each child should do everything the parent class can do, plus more specific things. guideline asserts that child classes should be able to replace parent classes without affecting functionality.
-Interface Segreagation Principle - A client that only needs to work with cars would still need to depend on the entire VehicleService interface, including methods related to trucks and motorcycles that it doesn't use.
-Dependency Inversion Principle - if lots of things are using a specific interface, make the interface geenral rather than keeping specific ones for each thing
+### Separation of Concerns (SOC): 
+Divide the code into logical modules or functions, each with a specific responsibility, making it easier to maintain and modify.
+I don't think we need to cover this, as per above million examples, I'm sure you're fully aware of how we are always looking to modularise, simplify and clean our code.
 
 
-This is good: https://axolo.co/blog/p/core-principles-of-writing-clean-code
 
-Also good: https://www.planetgeek.ch/wp-content/uploads/2014/11/Clean-Code-V2.4.pdf
+### KISS (Keep It Simple, Stupid)
+Finally (!) we get to the core of clean code - Keep It Simple! We are writing code for humans to read, otherwise we would all be using Assembly to write our code. Coding languages are successful or otherwise as people are able to understand and write them. Every language CAN make a linked list, languages just hide that complexity behind simpler functions and classes. Sound familiar? Yep - clean code applies here too. Languages demarcate the basic functions that the author defined, but they all ultimately perform the same thing - creating a list of Assembly (or binary) code that we can use to either store data, or do something with it.
 
-????
+### Simple clean code through SOLID
+SOLID principles are closely aligned with Clean Code as a concept, and are a great way to quickly wrap your thinking around a framework when approaching a problem.
+
+#### Single Resposibility
+Software is made up of functions that all do one thing, and are responsible for their own data.
+#### Open/Closed Principle (OCP) 
+Software entities should be open for extension but closed for modification
+#### Liskov Substituion Principle 
+Each child should do everything the parent class can do, plus more specific things. This guideline asserts that child classes should be able to replace parent classes without affecting functionality.
+#### Interface Segreagation Principle 
+A client that only needs to work with cars would still need to depend on the entire VehicleService interface, including methods related to trucks and motorcycles that it doesn't use.
+#### Dependency Inversion Principle 
+If lots of things are using a specific interface, make the interface geenral rather than keeping specific ones for each thing
+
+## Concluding remark
+Need a wallchart, or maybe a new tattoo outlining the principles of Clean Code, now we're done here? No, you definitely do not. Clean code is a great framework and thought to keep in mind when performing coding processes, but it is ultimately NOT the answer to all our problems. It is a concept that Uncle Bob has peddled around to others in conferences and talks, and that's great, we should all think about our ways of working and improve on them, but no person has the answer. I firmly believe that the greatest way to understand something is to teach that thing, hence my writing this article. I definitely do think about Clean Code when I'm reviewing as part of my job. If we can rename or abstract a method, I'll open a pull request, if not, then we move on.
+
+
+
 
 
 
