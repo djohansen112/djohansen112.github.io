@@ -7,9 +7,11 @@ tags: [quality-engineering development]     # TAG names should always be lowerca
 
 # Clean Code Principles
 
-Clean Code is a term to encompass a set of recommendations put forward by a software engineer with some serious history - Robert Cecil Martin (Uncle Bob).
-Software is not a new process. It's definitely still a very live and dynamic feeling discipline, but in reality the first software is over a hundred years old (depending on your definition of software). Ada Lovelace was creating software in the 19th century, albeit the software was manually setting levers and never actually came about, but the idea was there.
-Turing, a giant name in the discipline was writing about modern sounding software as early as 1935 and the first real "stored in electronic memory" software is around 1948. We were still using punch card software as inputs well into the 1980s, but the ideas have been around long enough that we do have software engineers who have been working as software engineers as a job title for 50+ years. Uncle Bob is one of these. 
+Clean Code is a term to encompass a set of recommendations put forward by a software engineer with some serious history - Robert Cecil Martin (Uncle Bob). This article will outline some of these principles, although the lis tis not exhaustive. This is not even a prescriptive concept - we just have to think about it, and I thought I'd share it here as it makes sense to me, and as a quality engineer, this is what I want from code - clean, understandable, testable code.
+
+Software is not a new process. It's definitely still a very live and dynamic feeling discipline, but in reality the first software is over a hundred years old (depending on your definition of software). Ada Lovelace was creating software in the 19th century! Sure, the software was manually setting levers and never actually came about, but the idea was there.
+
+Turing, a giant name in the discipline was writing about modern sounding software as early as 1935 and the first real "stored in electronic memory" software is around 1948. We were even using punch card software as inputs well into the 1980s, but the ideas have been around long enough that we do have software engineers who have been working as software engineers as a job title for 50+ years. Uncle Bob is one of these. 
 
 ## Why the principles?
 The main point of this is to reduce WTFs per minute. This is the most important measure of a software system - if someone comes along in a week/month/decade and has to read you code, then your job now as a professional software developer is to reduce their WTF's per minute by adhering to clean code. 
@@ -38,21 +40,19 @@ Constants can be kept in separate classes, like a configuration file, and reused
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```cs
+{% highlight csharp %}
  public static void ConvertToHours(int seconds){
     return seconds * 3600;
 } 
-```
+{% endhighlight %}
 </td><td>
-
-```cs
+{% highlight csharp %}
  public const int Seconds_in_an_hour = 3600;
  
  public static void ConvertToHours(int seconds){
     return seconds * Seconds_in_an_hour;
 } 
-```
+{% endhighlight %}
 </td></tr>
 </table>
 
@@ -61,27 +61,25 @@ If you were creating an app that tracked days, why would you call it d when we c
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```cs
+{% highlight csharp %}
  public static void DaysSinceLogin(User u){
     int d;
     d = u.ll - currentDate();
     return d;
 } 
-```
+{% endhighlight %}
 </td><td>
-
-```cs
+{% highlight csharp %}
  public static void DaysSinceLogin(User user){
     int daysSinceLogin;
     daysSinceLogin = user.lastLogin - currentDate();
     return daysSinceLogin;
 } 
-```
+{% endhighlight %}
 </td></tr>
 </table>
 
-### Explaoin yourself in code
+### Explain yourself in code
 Even though it can sometimes feel redundant, it's better to explain yourself through pulling concepts together into sensible packets while you understand them. Maybe if we had an employee tracker that followed some business rule of:
 > Employees who have been here 5 years, and are selling more than $10k per month are considered for a bonus
 
@@ -89,8 +87,7 @@ Then let's pull those two concepts together early on so we can read through and 
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```cs
+{% highlight csharp %}
  class Employee {
     public int yearsServed;
     public int monthlySales;
@@ -99,10 +96,9 @@ Then let's pull those two concepts together early on so we can read through and 
 //500,000 lines of code later...
     if (Employee.yearsServed > 5 && Employee.monthlySales > 10000)
         payBonusTo(Employee)
-```
+{% endhighlight %}
 </td><td>
-
-```cs
+{% highlight csharp %}
  class Employee {
     private int yearsServed;
     private int monthlySales;
@@ -117,7 +113,7 @@ Then let's pull those two concepts together early on so we can read through and 
     if (Employee.getsBonus())
         payBonusTo(Employee)
 
-```
+{% endhighlight %}
 </td></tr>
 </table>
 Even though these look more confusing, now the code for getting a bonus is in the Employee, not the Payment Calculator, or Accounting Frontend, or wherever else we could lose track of it, and the readability in the code is MUCH improved.
@@ -130,8 +126,7 @@ Also, even though green is our favourite colour, in comments it can become diffi
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```cs
+{% highlight csharp %}
  class Employee {
     private int yearsServed //number of years served;
     private int monthlySales //monthly sales in dollars;
@@ -148,10 +143,9 @@ Also, even though green is our favourite colour, in comments it can become diffi
     if (Employee.getsBonus())   //this is from the Employee class
         payBonusTo(Employee)
 
-```
+{% endhighlight %}
 </td><td>
-
-```cs
+{% highlight csharp %}
  class Employee {
     private int yearsServed;
     private int monthlySales;
@@ -163,7 +157,7 @@ Also, even though green is our favourite colour, in comments it can become diffi
         reurn false;
     }
 } 
-```
+{% endhighlight %}
 </td></tr>
 </table>
 
@@ -175,8 +169,7 @@ A function should be named as a verb, in all cases! Why? Functions DO something.
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```cs
+{% highlight csharp %}
  public void Calculator(int a, int b, string operator) {
     if (operator == "multiply")
         return a * b;
@@ -190,10 +183,9 @@ A function should be named as a verb, in all cases! Why? Functions DO something.
 ...
 //500,000 lines of code later...
     speed = Calculator(62, 15, multiply)
-```
+{% endhighlight %}
 </td><td>
-
-```cs
+{% highlight csharp %}
  public void multiplyTwoNumbers(int a, int b) {
             return a * b;
  }
@@ -209,7 +201,7 @@ A function should be named as a verb, in all cases! Why? Functions DO something.
  ...
 //500,000 lines of code later...
     speed = multiplyTwoNumbers(62, 15)
-```
+{% endhighlight %}
 </td></tr>
 </table>
 
@@ -220,12 +212,10 @@ In these examples, even though they are simple, we can imagine a more complex fu
 Don't repeat yourself is about not repeating yourself.
 
 OK, moving on from that now that you've stopped applauding my comedic genius. Don't repeat yourself is about reducing the complexity by identifying places where our code can be reused.
-
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```cs
+{% highlight csharp %}
 public void withdrawFromAccount(int withdrawal, User user) {
     if (user.balance > 0 && user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
         user.balance = user.balance - withdrawal
@@ -235,10 +225,9 @@ public void withdrawFromAccount(int withdrawal, User user) {
         print("User balance is negative! Aborting withdrawal")
     }
 } 
-```
+{% endhighlight %}
 </td><td>
-
-```cs
+{% highlight csharp %}
 public void withdrawFromAccount(int withdrawal, User user) {
     if (user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
         user.isValid = true;
@@ -252,7 +241,7 @@ public void withdrawFromAccount(int withdrawal, User user) {
         print("User balance is negative! Aborting withdrawal")
     }
 } 
-```
+{% endhighlight %}
 </td></tr>
 </table>
 
@@ -274,37 +263,30 @@ Some standard capitalisation patterns includ:
 Other standards apply, such as PEP-8 for Python where they specify the number of spaces tyo be used to create indents, as well as where brackets should appear etc.
 
 The following Poor Code is just as valid as the Clean Code to the compiler, but definitely reads better. After all, code is for humans to read, and computers to interpret. If we can read it easily, we can make sure it works for the computers to interpret.
-
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```java
-public static void createabiglistofnumbers(){for(int i=0; i<5; i++)
-{System.out.println(i);}}
-```
+{% highlight java %}
+public static void createabiglistofnumbers(){for(int i=0; i<5; i++){System.out.println(i);}}
+{% endhighlight %}
 </td><td>
-
-```java
+{% highlight java %}
  public static void createListOfNumbers(){
     for(int i = 0; i < 5; i++){
         System.out.println(i);
     }
  }
-
-```
+{% endhighlight %}
 </td></tr>
 </table>
 
 ### Nested conditionals should be functions
 Anything more than two indents is a new function. Not really a hard and fast rule, but if your function has a nested if statement, then perhaps that nest could be exported as another mini function. This opens up the ability to reuse code, as well as better modularity. Even though these are not the end goals of programming, every little bit helps. It can also help to define naming for the code - instead of running an if statement checking someone's account balance by verifying their account status, if they have an account, if they are not on a stop-credit, or any other list of conditions, we can just check "if isValidCustomer()".
 We can see how these are starting to build as we've done this a few times now - Don't Repeat Yourself had similar code, but with a different intention in the example. Let's revisit it here:
-
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```cs
+{% highlight csharp %}
 public void withdrawFromAccount(int withdrawal, User user) {
     if (user.balance > 0 && user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
         user.balance = user.balance - withdrawal
@@ -314,10 +296,9 @@ public void withdrawFromAccount(int withdrawal, User user) {
         print("User balance is negative! Aborting withdrawal")
     }
 } 
-```
+{% endhighlight %}
 </td><td>
-
-```cs
+{% highlight csharp %}
 public void isValidCustomer(User user){
     if (user.accountIsOpen && user.accountExists && user.customerStatus != "INACTIVE"){
         return true;
@@ -334,7 +315,7 @@ public void withdrawFromAccount(int withdrawal, User user) {
         print("User balance is negative! Aborting withdrawal")
     }
 } 
-```
+{% endhighlight %}
 </td></tr>
 </table>
 So it reads better - if their account balance is greater than 0, and they check out as a valid customer, then we do the balance change. We can now also check that they are a valid, or even better, move that check to a flag on their own account object.
@@ -355,8 +336,7 @@ There are three steps to handle errors gracefully: Keep the user informed, keep 
 <table>
 <tr><td><h4>Poor Code</h4></td><td><h4>Clean Code</h4></td></tr>
 <tr><td> 
-
-```java
+{% highlight java %}
 public static void accountOpen(String args[])
 {
     try {
@@ -366,10 +346,9 @@ public static void accountOpen(String args[])
         throw e;
     }
 }
-```
+{% endhighlight %}
 </td><td>
-
-```java
+{% highlight java %}
 public static void accountOpen(String args[])
 {
     try {
@@ -385,10 +364,9 @@ public static void accountOpen(String args[])
     }
 }
 
-```
+{% endhighlight %}
 </td></tr>
 </table>
-
 
 ### You Ain't Gonna Need It
 Don't code what you aren't ready to use. Keep it up to date and reduce the amount of single use code. Just because you can code a list object to have a sort function doesn't mean you will ever need to use that sort, so wait until you have something that required the list to be sorted.
@@ -396,8 +374,6 @@ Don't code what you aren't ready to use. Keep it up to date and reduce the amoun
 ### Separation of Concerns (SOC): 
 Divide the code into logical modules or functions, each with a specific responsibility, making it easier to maintain and modify.
 I don't think we need to cover this, as per above million examples, I'm sure you're fully aware of how we are always looking to modularise, simplify and clean our code.
-
-
 
 ### KISS (Keep It Simple, Stupid)
 Finally (!) we get to the core of clean code - Keep It Simple! We are writing code for humans to read, otherwise we would all be using Assembly to write our code. Coding languages are successful or otherwise as people are able to understand and write them. Every language CAN make a linked list, languages just hide that complexity behind simpler functions and classes. Sound familiar? Yep - clean code applies here too. Languages demarcate the basic functions that the author defined, but they all ultimately perform the same thing - creating a list of Assembly (or binary) code that we can use to either store data, or do something with it.
@@ -418,10 +394,3 @@ If lots of things are using a specific interface, make the interface geenral rat
 
 ## Concluding remark
 Need a wallchart, or maybe a new tattoo outlining the principles of Clean Code, now we're done here? No, you definitely do not. Clean code is a great framework and thought to keep in mind when performing coding processes, but it is ultimately NOT the answer to all our problems. It is a concept that Uncle Bob has peddled around to others in conferences and talks, and that's great, we should all think about our ways of working and improve on them, but no person has the answer. I firmly believe that the greatest way to understand something is to teach that thing, hence my writing this article. I definitely do think about Clean Code when I'm reviewing as part of my job. If we can rename or abstract a method, I'll open a pull request, if not, then we move on.
-
-
-
-
-
-
-
