@@ -2,7 +2,7 @@
 title: Clean Code Principles
 date: 2025-01-14 11:22:33 +1000
 categories: [Development]
-tags: [quality-engineering development]     # TAG names should always be lowercase
+tags: [quality-engineering, development]     # TAG names should always be lowercase
 ---
 
 # Clean Code Principles

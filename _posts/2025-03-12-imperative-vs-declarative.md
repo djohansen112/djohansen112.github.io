@@ -34,7 +34,8 @@ TL;DR:
 Applying these approaches to testing is fairly straightforward. If Declarative is letting the system take care of the details, and Imperative is telling the system exactly all the details and processes, then applying these concepts to how we write our testing becomes a simple filtering process.
 Consider the below requirement:
 ```text
-When a user logs into the system they should see a green icon in the top corner with their user initials in it
+When a user logs into the system they should see a green icon in the top corner 
+with their user initials in it
 ```
 Declaratively that would be:
 ```gherkin
@@ -44,10 +45,10 @@ When the user logs in successfully
 Then a green icon is displayed in the top corner
 And the icon contains their initials according to the username
 | Example |
-|   username        | |     initials    |
-|   Danny Carey     | |     DC          |
-|   Steve McQueen   | |     SM          |
-|   Test Admin      | |     TA          |
+|   username        |     initials    |
+|   Danny Carey     |     DC          |
+|   Steve McQueen   |     SM          |
+|   Test Admin      |     TA          |
 ```
 So what makes this declarative? Let's do a quick list:
 - we haven't told them who to log in as
@@ -59,9 +60,9 @@ Let's try that again, but with an imperative approach
 ```gherkin
 Given the test admin user exists on the Salesforce system
 And the test admin user has the name "Admin" has a set of initials in their username
-When the user logs in to "http://test.salesforce.com" successfully with the Test Admin user
+When the user logs in to "test.system.com" successfully with the Test Admin user
 Then a circle icon is displayed in the top left corner
-And the icon has the colour code #008000 (HTML green)
+And the icon has the colour code "#008000" (HTML green)
 And the icon contains their initials according to the username
 |   username        | |     initials    |
 |   Test Admin      | |     TA          |
@@ -91,7 +92,7 @@ How about a little matrix table to finish off?
 <table style="width:100%; border-collapse: collapse; border: 1px solid black;">
   <thead>
     <tr>
-      <th style="border: 1px solid black;"> </th>
+      <th style="border: 1px solid black;"></th>
       <th style="border: 1px solid black; text-align: center;">Imperative</th>
       <th style="border: 1px solid black; text-align: center;">Declarative</th>
     </tr>
@@ -100,7 +101,8 @@ How about a little matrix table to finish off?
     <tr>
       <th style="border: 1px solid black; vertical-align: middle;">Logic</th>
       <td style="border: 1px solid black; vertical-align: middle;">
-        <pre><code class="language-gherkin">
+        <pre>
+					<code class="language-gherkin">
 Given a user logs in
 And the user displays the banking details page
 And the user opens the New Bank details page
@@ -112,22 +114,26 @@ And the BSB number field is selected
 And the user can update their BSB number
 And the Account number field is selected
 And the user can update their Account number
-        </code></pre>
+        </code>
+				</pre>
       </td>
       <td style="border: 1px solid black; vertical-align: middle;">
-        <pre><code class="language-gherkin">
+        <pre>
+					<code class="language-gherkin">
 Given a user logs in
 And a new bank account is linked to the customer
 And the Update details link is opened
 Then the user can update their BSB
 And the user can update their Account number
-        </code></pre>
+        </code>
+				</pre>
       </td>
     </tr>
     <tr>
-    <th style="border: 1px solid black; vertical-align: middle;">Step</th>
-    <td style="border: 1px solid black; vertical-align: middle;">
-        <pre><code class="language-gherkin">
+      <th style="border: 1px solid black; vertical-align: middle;">Step</th>
+      <td style="border: 1px solid black; vertical-align: middle;">
+        <pre>
+					<code class="language-gherkin">
 Given the Admin user logs in
 | username  | password |
 | test.admin    |   Test@123    |
@@ -147,10 +153,12 @@ And the Account number field is selected
 And the user can update their Account number
 |   account_number  |
 |   2345-23456  |
-        </code></pre>
+        </code>
+				</pre>
       </td>
       <td style="border: 1px solid black; vertical-align: middle;">
-        <pre><code class="language-gherkin">
+        <pre>
+					<code class="language-gherkin">
 Given a user logs in
 And the user displays the banking details page
 And the user opens the New Bank details page
@@ -162,10 +170,12 @@ And the BSB number field is selected
 And the user can update their BSB number
 And the Account number field is selected
 And the user can update their Account number
-        </code></pre>
+        </code>
+				</pre>
       </td>
   </tbody>
 </table>
+
 
 To a new user, Declarative logic is going to be confusing, as they may not have know where to find that New Account feature. To a seasoned user, they're going to skip over what they think they know, and in doing so may miss some important steps. 
 We can start to see some advantages in terms of length for Declarative authoring, but some real wins on the Imperative side for clarity and accuracy of reproduceability. It's a balancing act, as all things are. Just keep these in the bucket for later on and you will start recognising where these concepts can be applied.
