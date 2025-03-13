@@ -92,7 +92,7 @@ How about a little matrix table to finish off?
 <table style="width:100%; border-collapse: collapse; border: 1px solid black;">
   <thead>
     <tr>
-      <th style="border: 1px solid black;"></th>
+      <th style="border: 1px solid black;"> </th>
       <th style="border: 1px solid black; text-align: center;">Imperative</th>
       <th style="border: 1px solid black; text-align: center;">Declarative</th>
     </tr>
@@ -173,6 +173,7 @@ And the user can update their Account number
         </code>
 				</pre>
       </td>
+      </tr>
   </tbody>
 </table>
 
