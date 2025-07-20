@@ -5,12 +5,11 @@ categories: [Quality Engineering]
 tags: [development, business-analysis, business-value]     # TAG names should always be lowercase
 ---
 
-# Building Better Business Behaviours
-## User stories and INVESTing in value based development
+# User stories and INVESTing in value based development
 
 Oh man, am I sick of reiterating this point...
 
-> Better software starts with better stories, and better stories create business value! 
+{% include callout.html content="Better software starts with better stories, and better stories create business value!" type="primary" %}
 
 At least with Agile (or the cherry picked hybrid Agile that the world is converging on...) writing user stories is pretty much always going to be the best way to specify requirements for our software. 
 
@@ -156,9 +155,8 @@ INVEST is a serendipitous acronym, it's nice when acronyms just kinda make sense
 Using this as a benchmark to critique our stories does help - can we make it simpler (Small), can we decouple it so it's not stuck in a huge release bundle of interconnected features (Independent), can we do this a better way (Negotiable) and maybe have a conversation about creating an admin panel of buttons, or using links instead?
 
 Maybe the most important here is Negotiable - Agile is all about creating discussion: people over process, creating spaces for understanding and agreement before we create work.
-> The most efficient and effective method of
-conveying information to and within a development
-team is face-to-face conversation.  ([agilemanifesto.org](https://agilemanifesto.org/principles.html))
+
+{% include callout.html content="The most efficient and effective method of conveying information to and within a development team is face-to-face conversation. ([agilemanifesto.org](https://agilemanifesto.org/principles.html))" type="primary" %}
 
 Cutting down the story and having the conversation early helps to define the best way to solve the problem and create value.
 
@@ -178,8 +176,7 @@ The Three Amigos are:
 
 They are a trio of problem solvers who work *collaboratively* to develop solutions. The PO knows what they want, the devs know how to do it, and the testers make sure it does it right. 
 
-> [!NOTE]
-> Make no mistake, in the above picture - the tester is the one ready to burn it all with fire. We don't make the rules, we just try and break them, hard and often. 
+{% include note.html content="Make no mistake, in the above picture - the tester is the one ready to burn it all with fire. We don't make the rules, we just try and break them, hard and often." %}
 
 By approaching the problem in a backlog design meeting where the three can speak and work together, the feature can be discussed and optimised. 
 The developer can suggest using links instead of buttons like they do in other places on the site, the tester can ask about what should happen with the deleted user when they try to log in again, the product owner can make the decisions with this feedback and we can all work together to create something that meets INVEST and optimises value for the business.
