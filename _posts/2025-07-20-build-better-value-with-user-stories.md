@@ -5,9 +5,7 @@ categories: [Quality Engineering]
 tags: [development, business-analysis, business-value]     # TAG names should always be lowercase
 ---
 
-# User stories and INVESTing in value based development
-
-Oh man, am I sick of reiterating this point...
+## User stories and INVESTing in value based development
 
 {: .note }
 Better software starts with better stories, and better stories create business value!
@@ -15,10 +13,10 @@ Better software starts with better stories, and better stories create business v
 At least with Agile (or the cherry picked hybrid Agile that the world is converging on...) writing user stories is pretty much always going to be the best way to specify requirements for our software. 
 
 Good user stories are absolutely inherent in any improvement to a software development team at any level.
-Product Owners need user stories to be descriptive and straight forward, with clear traces back to the value proposition of "why" we need to invest money in this software.
-Business Analysts need good user stories so they can make sure they are fulfilling the finer details of what the Product Owner needs.
-Developers need good user stories so they can see the problem, not someone else's solution, and start working on the best way to solve that problem.
-Testers need good user stories so we can make sure we have solved the problem, and not created any new gremlins in the process.
+- Product Owners need user stories to be descriptive and straight forward, with clear traces back to the value proposition of "why" we need to invest money in this software.
+- Business Analysts need good user stories so they can make sure they are fulfilling the finer details of what the Product Owner needs.
+- Developers need good user stories so they can see the problem, not someone else's solution, and start working on the best way to solve that problem.
+- Testers need good user stories so we can make sure we have solved the problem, and not created any new gremlins in the process.
 
 At it's simplest, a user story is a short few lines of **Who?**, **What?**, **Why?** - usually this is presented in the format:
 ```
@@ -47,10 +45,14 @@ Nah, tricked you. Let's start with the Bad...
 
 ### The Bad
 Here we go. Here's some examples of bad user stories:
-> Create a new field called Project Owner on the Summary form. 
+```
+Create a new field called Project Owner on the Summary form. 
+```
 
 Where on the form? What does it do? Is it text or a dropdown?
-> Change the colour of the heading to blue
+```
+Change the colour of the heading to blue
+```
 
 Sure thing boss, any specific kinda blue? Which heading? Across the entire site? Blue background? Do I change the background if it doesn't look good?
 
@@ -158,7 +160,7 @@ Using this as a benchmark to critique our stories does help - can we make it sim
 Maybe the most important here is Negotiable - Agile is all about creating discussion: people over process, creating spaces for understanding and agreement before we create work.
 
 {: .highlight }
-"The most efficient and effective method of conveying information to and within a development team is face-to-face conversation. ([agilemanifesto.org](https://agilemanifesto.org/principles.html))"
+"The most efficient and effective method of conveying information to and within a development team is face-to-face conversation." ([agilemanifesto.org](https://agilemanifesto.org/principles.html))
 
 
 Cutting down the story and having the conversation early helps to define the best way to solve the problem and create value.
